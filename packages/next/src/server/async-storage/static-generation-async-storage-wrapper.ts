@@ -15,7 +15,7 @@ export type StaticGenerationContext = {
     fetchCache?: StaticGenerationStore['fetchCache']
     isServerAction?: boolean
     waitUntil?: Promise<any>
-    experimental: { ppr: boolean; missingSuspenseWithCSRBailout?: boolean }
+    experimental?: Pick<RenderOptsPartial['experimental'], 'supportsPPR'>
 
     /**
      * Fetch metrics attached in patch-fetch.ts
@@ -76,7 +76,7 @@ export const StaticGenerationAsyncStorageWrapper: AsyncStorageWrapper<
       !renderOpts.isServerAction
 
     const prerenderState: StaticGenerationStore['prerenderState'] =
-      isStaticGeneration && renderOpts.experimental.ppr
+      isStaticGeneration && renderOpts.experimental?.supportsPPR
         ? createPrerenderState(renderOpts.isDebugPPRSkeleton)
         : null
 
